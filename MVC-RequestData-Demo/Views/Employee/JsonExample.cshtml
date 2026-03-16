@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "JSON Body Example";
+}
+
+<h2>JSON Body Example</h2>
+
+<div>
+    <label>First Name</label>
+    <input type="text" id="firstName" />
+</div>
+
+<div>
+    <label>Email</label>
+    <input type="text" id="email" />
+</div>
+
+<div>
+    <label>Department</label>
+    <input type="text" id="department" />
+</div>
+
+<br />
+<button id="btnSubmit">Send JSON</button>
+
+<p id="result"></p>
+
+<script src="~/Scripts/jquery-3.7.0.min.js"></script>
+<script>
+    $("#btnSubmit").click(function () {
+        var employee = {
+            FirstName: $("#firstName").val(),
+            Email: $("#email").val(),
+            Department: $("#department").val()
+        };
+
+        $.ajax({
+            url: '/Employee/CreateJson',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(employee),
+            success: function (response) {
+                $("#result").html(
+                    "<b>" + response.message + "</b><br/>" +
+                    "Name: " + response.firstName + "<br/>" +
+                    "Email: " + response.email + "<br/>" +
+                    "Department: " + response.department
+                );
+            }
+        });
+    });
+</script>
